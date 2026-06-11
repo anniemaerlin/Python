@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dynamic-pricing-api
+    ports:
+      - "8000:8000"
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      DEBUG: "false"
+      LOG_LEVEL: INFO
+      ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:8080,http://127.0.0.1:3000"
+      ENABLE_FIREBASE: "false"
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./app/models:/app/app/models
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - pricing-network
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: dynamic-pricing-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - pricing-network
+
+networks:
+  pricing-network:
+    driver: bridge

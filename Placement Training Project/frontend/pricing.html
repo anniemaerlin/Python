@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Pricing — PP.PRICING</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+
+  <div class="glow-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-cube sidebar-brand-icon"></i>
+        <span class="sidebar-brand-name">PP.PRICING</span>
+      </div>
+      <p class="nav-section-label">Navigation</p>
+      <ul class="nav-list">
+        <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="pricing.html" class="active"><i class="fa-solid fa-tag"></i><span>Dynamic Pricing</span></a></li>
+        <li><a href="forecast.html"><i class="fa-solid fa-chart-area"></i><span>Demand Forecast</span></a></li>
+        <li><a href="customers.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li><a href="competitor.html"><i class="fa-solid fa-store"></i><span>Competitor</span></a></li>
+        <li><a href="auditlog.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit Log</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="ai-status-pill"><span class="pulse-dot"></span><span>AI ENGINE ONLINE</span></div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <span class="top-bar-title">Dynamic Pricing</span>
+        <div class="top-bar-right">
+          <div class="system-badge"><span class="pulse-dot"></span><span>AI ENGINE: ONLINE &amp; OPTIMIZING</span></div>
+          <div class="user-badge"><i class="fa-regular fa-circle-user"></i><span>Admin</span></div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="page-header">
+          <h1>Dynamic Pricing</h1>
+          <p>Predict the optimal price using ML models based on real-time market signals</p>
+        </div>
+
+        <div class="dash-grid">
+
+          <!-- Input Form -->
+          <div class="card col-7">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Price Prediction Inputs</h2>
+              <div style="display:flex;gap:0.6rem;align-items:center;">
+                <select id="model-select" style="background:rgba(255,255,255,0.05);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.4rem 0.75rem;font-size:0.82rem;outline:none;">
+                  <option value="xgboost">XGBoost</option>
+                  <option value="random_forest">Random Forest</option>
+                </select>
+                <span class="badge badge-cyan">ML Model</span>
+              </div>
+            </div>
+
+            <form id="pricing-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Current Price (₹)</label>
+                  <input type="number" id="current_price" step="0.01" value="1200" min="0" required>
+                </div>
+                <div class="form-group">
+                  <label>Competitor Price (₹)</label>
+                  <input type="number" id="competitor_price" step="0.01" value="1280" min="0">
+                </div>
+                <div class="form-group">
+                  <label>Demand (units)</label>
+                  <input type="number" id="demand" value="200" min="0">
+                </div>
+                <div class="form-group">
+                  <label>Inventory (units)</label>
+                  <input type="number" id="inventory" value="50" min="0">
+                </div>
+                <div class="form-group">
+                  <label>Conversion Rate (0–1)</label>
+                  <input type="number" id="conversion_rate" step="0.001" value="0.12" min="0" max="1">
+                </div>
+                <div class="form-group">
+                  <label>Demand Index (0–1)</label>
+                  <input type="number" id="demand_index" step="0.01" value="0.75" min="0" max="1">
+                </div>
+                <div class="form-group">
+                  <label>Promotion Active</label>
+                  <select id="promotion">
+                    <option value="0">No</option>
+                    <option value="1" selected>Yes</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Discount %</label>
+                  <input type="number" id="discount_percent" step="0.1" value="0" min="0" max="100">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="predict-btn">
+                  <i class="fa-solid fa-bolt"></i> Predict Optimal Price
+                </button>
+                <button type="button" class="btn btn-secondary" id="explain-btn">
+                  <i class="fa-solid fa-magnifying-glass-chart"></i> Explain Prediction
+                </button>
+              </div>
+            </form>
+
+            <div id="error-box" class="alert alert-error" style="display:none;margin-top:1rem;"></div>
+          </div>
+
+          <!-- Result Panel -->
+          <div class="card col-5" id="result-panel">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-chart-line"></i> Prediction Result</h2>
+              <span class="badge badge-success" id="model-badge" style="display:none;">—</span>
+            </div>
+
+            <div id="loading-state" style="display:flex;align-items:center;gap:0.75rem;color:var(--text-secondary);padding:2rem 0;">
+              <span style="color:var(--text-muted);font-size:0.9rem;">Fill in the form and click <strong style="color:var(--primary-cyan);">Predict</strong> to see results.</span>
+            </div>
+
+            <div id="result-block" class="result-block">
+              <div class="result-row">
+                <span class="label">Recommended Price</span>
+                <span class="value" id="r-price">—</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Price Change</span>
+                <span class="value green" id="r-change">—</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Confidence Score</span>
+                <span class="value" id="r-confidence">—</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Revenue Impact</span>
+                <span class="value green" id="r-revenue">—</span>
+              </div>
+              <div class="result-row">
+                <span class="label">Model Used</span>
+                <span class="value" id="r-model">—</span>
+              </div>
+            </div>
+
+            <!-- Explanation (shown when explain button used) -->
+            <div id="explain-block" style="margin-top:1.25rem;display:none;">
+              <div class="card-header" style="margin-bottom:1rem;">
+                <h2 class="card-title" style="font-size:0.95rem;"><i class="fa-solid fa-lightbulb"></i> AI Explanation</h2>
+              </div>
+              <p id="r-explanation" style="font-size:0.88rem;color:var(--text-secondary);line-height:1.55;margin-bottom:1rem;"></p>
+              <div id="r-factors" style="display:flex;flex-direction:column;gap:0.4rem;"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:0.4rem;"></i>PP.PRICING — AI Dynamic Pricing Engine</span>
+        <span id="predict-count" style="color:var(--text-muted);">Predictions: 0</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

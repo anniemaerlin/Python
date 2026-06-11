@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PP.PRICING — AI Dynamic Pricing Engine</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="glow-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-cube sidebar-brand-icon"></i>
+        <span class="sidebar-brand-name">PP.PRICING</span>
+      </div>
+
+      <p class="nav-section-label">Navigation</p>
+      <ul class="nav-list">
+        <li><a href="index.html" class="active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="pricing.html"><i class="fa-solid fa-tag"></i><span>Dynamic Pricing</span></a></li>
+        <li><a href="forecast.html"><i class="fa-solid fa-chart-area"></i><span>Demand Forecast</span></a></li>
+        <li><a href="customers.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li><a href="competitor.html"><i class="fa-solid fa-store"></i><span>Competitor</span></a></li>
+        <li><a href="auditlog.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit Log</span></a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="ai-status-pill">
+          <span class="pulse-dot"></span>
+          <span>AI ENGINE ONLINE</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <span class="top-bar-title">Dashboard</span>
+        <div class="top-bar-right">
+          <div class="system-badge">
+            <span class="pulse-dot"></span>
+            <span>AI ENGINE: ONLINE &amp; OPTIMIZING</span>
+          </div>
+          <div class="user-badge">
+            <i class="fa-regular fa-circle-user"></i>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+
+        <!-- Page Hero -->
+        <div class="page-header">
+          <h1>AI Dynamic Pricing Engine</h1>
+          <p>Real-time market tracking, intelligence ingestion, and machine learning price recommendation engine.</p>
+        </div>
+
+        <!-- ── Hero Stats ── -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card cyan">
+            <div class="stat-label"><i class="fa-solid fa-tag"></i> Current Price</div>
+            <div class="stat-value" id="s-current">₹—</div>
+            <div class="stat-footer">Market baseline reference</div>
+          </div>
+          <div class="stat-card magenta">
+            <div class="stat-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Recommended Price</div>
+            <div class="stat-value" id="s-recommended">₹—</div>
+            <div class="stat-footer"><span class="trend-up" id="s-diff">—</span> optimal change</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-label"><i class="fa-solid fa-chart-line"></i> Revenue Impact</div>
+            <div class="stat-value" id="s-revenue">₹—</div>
+            <div class="stat-footer"><span class="trend-up">+14.2%</span> proj. growth</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label"><i class="fa-solid fa-shield-halved"></i> Confidence Score</div>
+            <div class="stat-value" id="s-confidence">—%</div>
+            <div class="stat-footer"><span class="trend-up">99.8%</span> reliability margin</div>
+          </div>
+        </div>
+
+        <!-- ── Main Dashboard Grid ── -->
+        <div class="dash-grid">
+
+          <!-- Live Price Recommendation Center -->
+          <section class="card col-8" id="sec-rec">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-bolt"></i> Live Price Recommendation Center</h2>
+              <span class="badge badge-success">ACTIVE INGESTION</span>
+            </div>
+            <div class="rec-panel">
+              <div class="price-boxes">
+                <div class="price-box">
+                  <div class="price-box-meta">
+                    <span class="price-box-label">Current Price</span>
+                    <span class="price-box-value" id="rec-current">₹—</span>
+                  </div>
+                  <span class="badge">Baseline</span>
+                </div>
+                <div class="price-box recommended">
+                  <div class="price-box-meta">
+                    <span class="price-box-label">Recommended Price</span>
+                    <span class="price-box-value" id="rec-recommended">₹—</span>
+                  </div>
+                  <span class="badge badge-cyan" id="rec-badge">+0%</span>
+                </div>
+              </div>
+              <div class="rec-metrics">
+                <div class="metric-row">
+                  <div class="metric-box">
+                    <span class="metric-label">Price Increase</span>
+                    <span class="metric-value magenta" id="rec-inc">+0%</span>
+                    <span class="metric-desc">optimized markup</span>
+                  </div>
+                  <div class="metric-box">
+                    <span class="metric-label">AI Confidence</span>
+                    <span class="metric-value purple" id="rec-conf">0%</span>
+                    <span class="metric-desc">very high accuracy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- AI Market Intelligence -->
+          <section class="card col-4" id="sec-market">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-earth-americas"></i> AI Market Intelligence</h2>
+            </div>
+            <div class="competitor-grid" id="comp-grid">
+              <!-- populated by JS -->
+            </div>
+          </section>
+
+          <!-- Revenue Impact Simulator -->
+          <section class="card col-6" id="sec-sim">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-sliders"></i> Revenue Impact Simulator</h2>
+            </div>
+            <div class="simulator-body">
+              <div class="slider-wrap">
+                <div class="slider-top">
+                  <span class="slider-title">Price Adjustment Percent</span>
+                  <span class="slider-val" id="slider-readout">+0.0%</span>
+                </div>
+                <input type="range" class="neon-slider" id="sim-slider" min="-20" max="20" step="0.5" value="0">
+                <div class="slider-marks"><span>-20%</span><span>0% (Base)</span><span>+20%</span></div>
+              </div>
+              <div class="sim-outputs">
+                <div class="sim-card">
+                  <span class="sim-card-label">Expected Revenue</span>
+                  <span class="sim-card-value" id="sim-revenue">₹—</span>
+                </div>
+                <div class="sim-card">
+                  <span class="sim-card-label">Expected Demand</span>
+                  <span class="sim-card-value" id="sim-demand">—</span>
+                </div>
+                <div class="sim-card">
+                  <span class="sim-card-label">Profit Change</span>
+                  <span class="sim-card-value" id="sim-profit">₹—</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Demand Heatmap -->
+          <section class="card col-6" id="sec-heatmap">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-regular fa-calendar-days"></i> Demand Heatmap</h2>
+            </div>
+            <div class="heatmap-scroll">
+              <div class="heatmap-inner" id="heatmap-root"></div>
+            </div>
+          </section>
+
+          <!-- Feature Importance -->
+          <section class="card col-4" id="sec-feat">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-chart-simple"></i> Feature Importance</h2>
+            </div>
+            <div class="feat-list" id="feat-list"></div>
+          </section>
+
+          <!-- AI Insights Feed -->
+          <section class="card col-4" id="sec-insights">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-regular fa-comment-dots"></i> AI Insights Feed</h2>
+            </div>
+            <div class="insights-list" id="insights-list"></div>
+          </section>
+
+          <!-- Pricing Timeline -->
+          <section class="card col-4" id="sec-timeline">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Pricing Timeline</h2>
+            </div>
+            <div class="timeline" id="timeline-root"></div>
+          </section>
+
+        </div><!-- end dash-grid -->
+
+        <!-- Smart KPIs -->
+        <div style="margin-top:1.5rem;">
+          <div class="card-header" style="margin-bottom:1.25rem;">
+            <h2 class="card-title" style="font-size:1.2rem;"><i class="fa-solid fa-circle-nodes"></i> Smart Key Performance Indicators</h2>
+          </div>
+          <div class="kpi-row" id="kpi-row"></div>
+        </div>
+
+      </div><!-- page-wrapper -->
+
+      <footer class="page-footer">
+        <span><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:0.4rem;"></i>Advanced AI Dynamic Price Optimiser • Enterprise Grade</span>
+        <span>Data Refreshed: <strong id="ts-refresh">Just Now</strong></span>
+      </footer>
+
+    </div><!-- main-content -->
+  </div><!-- app-shell -->
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard-main.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

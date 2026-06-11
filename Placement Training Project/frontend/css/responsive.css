@@ -1,0 +1,7 @@
+/* responsive overrides */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .navbar{padding:0 12px}
+  .content{padding:12px}
+}

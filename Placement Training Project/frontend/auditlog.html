@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Log — PP.PRICING</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+
+  <div class="glow-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-cube sidebar-brand-icon"></i>
+        <span class="sidebar-brand-name">PP.PRICING</span>
+      </div>
+      <p class="nav-section-label">Navigation</p>
+      <ul class="nav-list">
+        <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="pricing.html"><i class="fa-solid fa-tag"></i><span>Dynamic Pricing</span></a></li>
+        <li><a href="forecast.html"><i class="fa-solid fa-chart-area"></i><span>Demand Forecast</span></a></li>
+        <li><a href="customers.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li><a href="competitor.html"><i class="fa-solid fa-store"></i><span>Competitor</span></a></li>
+        <li><a href="auditlog.html" class="active"><i class="fa-solid fa-clipboard-list"></i><span>Audit Log</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="ai-status-pill"><span class="pulse-dot"></span><span>AI ENGINE ONLINE</span></div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <span class="top-bar-title">Audit Log</span>
+        <div class="top-bar-right">
+          <div class="system-badge"><span class="pulse-dot"></span><span>AI ENGINE: ONLINE &amp; OPTIMIZING</span></div>
+          <div class="user-badge"><i class="fa-regular fa-circle-user"></i><span>Admin</span></div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="page-header">
+          <h1>Audit Log</h1>
+          <p>Complete trail of all pricing decisions, forecasts, and system events</p>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:1.5rem;" id="audit-stats">
+          <div class="stat-card cyan">
+            <div class="stat-label"><i class="fa-solid fa-bolt"></i> Pricing Events</div>
+            <div class="stat-value" id="cnt-pricing">0</div>
+            <div class="stat-footer">Total predictions made</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-label"><i class="fa-solid fa-chart-area"></i> Forecast Events</div>
+            <div class="stat-value" id="cnt-forecast">0</div>
+            <div class="stat-footer">Demand forecasts run</div>
+          </div>
+          <div class="stat-card magenta">
+            <div class="stat-label"><i class="fa-solid fa-store"></i> Competitor Scans</div>
+            <div class="stat-value" id="cnt-competitor">0</div>
+            <div class="stat-footer">Market analyses</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label"><i class="fa-solid fa-users"></i> Customer Events</div>
+            <div class="stat-value" id="cnt-customer">0</div>
+            <div class="stat-footer">Segmentations run</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title"><i class="fa-solid fa-list-check"></i> Activity Feed</h2>
+            <button class="btn btn-secondary" id="refresh-btn" style="font-size:0.82rem;padding:0.45rem 0.85rem;">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+
+          <div class="table-toolbar">
+            <input type="search" id="audit-search" placeholder="Search actions, prices, reasons…">
+            <select id="audit-filter" style="background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.85rem;font-size:0.88rem;outline:none;">
+              <option value="all">All Events</option>
+              <option value="pricing">Pricing Predict</option>
+              <option value="forecast">Forecast Update</option>
+              <option value="competitor">Competitor Scan</option>
+              <option value="customer">Customer Segment</option>
+            </select>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table" id="audit-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Event Type</th>
+                  <th>Recommended Price</th>
+                  <th>Confidence</th>
+                  <th>Reason / Notes</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="audit-body">
+              </tbody>
+            </table>
+          </div>
+
+          <div id="audit-empty" style="text-align:center;padding:2rem;color:var(--text-muted);display:none;">
+            <i class="fa-solid fa-inbox" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
+            No events match the current filter.
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:0.4rem;"></i>PP.PRICING — AI Dynamic Pricing Engine</span>
+        <span id="audit-count" style="color:var(--text-muted);">0 records</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auditlog.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

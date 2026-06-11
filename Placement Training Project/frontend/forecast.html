@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demand Forecast — PP.PRICING</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="glow-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-cube sidebar-brand-icon"></i>
+        <span class="sidebar-brand-name">PP.PRICING</span>
+      </div>
+      <p class="nav-section-label">Navigation</p>
+      <ul class="nav-list">
+        <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="pricing.html"><i class="fa-solid fa-tag"></i><span>Dynamic Pricing</span></a></li>
+        <li><a href="forecast.html" class="active"><i class="fa-solid fa-chart-area"></i><span>Demand Forecast</span></a></li>
+        <li><a href="customers.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li><a href="competitor.html"><i class="fa-solid fa-store"></i><span>Competitor</span></a></li>
+        <li><a href="auditlog.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit Log</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="ai-status-pill"><span class="pulse-dot"></span><span>AI ENGINE ONLINE</span></div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <span class="top-bar-title">Demand Forecast</span>
+        <div class="top-bar-right">
+          <div class="system-badge"><span class="pulse-dot"></span><span>AI ENGINE: ONLINE &amp; OPTIMIZING</span></div>
+          <div class="user-badge"><i class="fa-regular fa-circle-user"></i><span>Admin</span></div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="page-header">
+          <h1>Demand Forecast</h1>
+          <p>AI-powered demand prediction using time-series analysis with seasonal patterns</p>
+        </div>
+
+        <div class="dash-grid">
+
+          <!-- Controls -->
+          <div class="card col-4">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-sliders"></i> Forecast Settings</h2>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Product ID</label>
+              <input type="text" id="product_id" value="PROD-001">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Days Ahead</label>
+              <input type="number" id="days_ahead" value="30" min="1" max="365">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Seasonality</label>
+              <select id="seasonality">
+                <option value="none">None</option>
+                <option value="weekly" selected>Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Historical Data (comma-separated)</label>
+              <textarea id="hist_data" rows="4" style="background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:10px;color:var(--text-main);padding:0.65rem 0.9rem;font-family:var(--font-mono);font-size:0.82rem;outline:none;width:100%;resize:vertical;">50,55,53,60,65,70,68,72,75,78,80,82,85,88,90,92,88,94,97,100</textarea>
+            </div>
+            <button class="btn btn-primary" id="forecast-btn" style="width:100%;">
+              <i class="fa-solid fa-chart-area"></i> Run Forecast
+            </button>
+            <div id="fc-error" class="alert alert-error" style="display:none;margin-top:0.75rem;"></div>
+          </div>
+
+          <!-- Forecast Chart -->
+          <div class="card col-8">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-wave-square"></i> Demand Forecast Chart</h2>
+              <div style="display:flex;gap:0.5rem;">
+                <span class="badge badge-cyan" id="fc-trend-badge" style="display:none;">—</span>
+                <span class="badge" id="fc-acc-badge" style="display:none;">—</span>
+              </div>
+            </div>
+            <div style="position:relative;height:320px;">
+              <canvas id="forecastChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Insights Cards -->
+          <div class="card col-4">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-info-circle"></i> Forecast Insights</h2>
+            </div>
+            <div id="fc-insights" style="display:flex;flex-direction:column;gap:0.85rem;">
+              <div style="color:var(--text-muted);font-size:0.9rem;">Run a forecast to see insights.</div>
+            </div>
+          </div>
+
+          <!-- Inventory Recommendation -->
+          <div class="card col-8" id="inv-card" style="display:none;">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-warehouse"></i> Inventory Recommendation</h2>
+            </div>
+            <div id="inv-content" class="result-block visible"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:0.4rem;"></i>PP.PRICING — AI Dynamic Pricing Engine</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/forecast.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

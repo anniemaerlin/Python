@@ -1,0 +1,6 @@
+/* dashboard specific tweaks */
+.card.chart-card{height:320px}
+.card .chart{height:100%}
+.kpi .trend{color:var(--muted); font-size:12px}
+.chart-legend{display:flex; gap:12px; align-items:center}
+.chart-legend .item{display:flex; gap:8px; align-items:center}

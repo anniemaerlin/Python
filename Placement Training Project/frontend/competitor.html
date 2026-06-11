@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competitor Analysis — PP.PRICING</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="glow-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fa-solid fa-cube sidebar-brand-icon"></i>
+        <span class="sidebar-brand-name">PP.PRICING</span>
+      </div>
+      <p class="nav-section-label">Navigation</p>
+      <ul class="nav-list">
+        <li><a href="index.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="pricing.html"><i class="fa-solid fa-tag"></i><span>Dynamic Pricing</span></a></li>
+        <li><a href="forecast.html"><i class="fa-solid fa-chart-area"></i><span>Demand Forecast</span></a></li>
+        <li><a href="customers.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li><a href="competitor.html" class="active"><i class="fa-solid fa-store"></i><span>Competitor</span></a></li>
+        <li><a href="auditlog.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit Log</span></a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="ai-status-pill"><span class="pulse-dot"></span><span>AI ENGINE ONLINE</span></div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <span class="top-bar-title">Competitor Analysis</span>
+        <div class="top-bar-right">
+          <div class="system-badge"><span class="pulse-dot"></span><span>AI ENGINE: ONLINE &amp; OPTIMIZING</span></div>
+          <div class="user-badge"><i class="fa-regular fa-circle-user"></i><span>Admin</span></div>
+        </div>
+      </header>
+
+      <div class="page-wrapper">
+        <div class="page-header">
+          <h1>Competitor Analysis</h1>
+          <p>Real-time competitive pricing intelligence and market positioning</p>
+        </div>
+
+        <div class="dash-grid">
+
+          <!-- Analysis Form -->
+          <div class="card col-4">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-magnifying-glass-dollar"></i> Analyze Competitors</h2>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Product ID</label>
+              <input type="text" id="prod_id" value="PROD-001">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label>Your Current Price (₹)</label>
+              <input type="number" id="your_price" value="1200" min="0">
+            </div>
+            <hr style="border:none;border-top:1px solid var(--border-glass);margin:1rem 0;">
+            <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.75rem;">Competitor Prices (₹)</p>
+            <div id="competitor-inputs">
+              <div class="comp-input-row" style="display:flex;gap:0.5rem;margin-bottom:0.6rem;">
+                <input type="text" placeholder="Competitor name" value="Amazon" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;">
+                <input type="number" placeholder="Price" value="1280" style="width:90px;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;font-family:var(--font-mono);">
+              </div>
+              <div class="comp-input-row" style="display:flex;gap:0.5rem;margin-bottom:0.6rem;">
+                <input type="text" placeholder="Competitor name" value="Flipkart" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;">
+                <input type="number" placeholder="Price" value="1320" style="width:90px;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;font-family:var(--font-mono);">
+              </div>
+              <div class="comp-input-row" style="display:flex;gap:0.5rem;margin-bottom:0.6rem;">
+                <input type="text" placeholder="Competitor name" value="Meesho" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;">
+                <input type="number" placeholder="Price" value="1180" style="width:90px;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;font-family:var(--font-mono);">
+              </div>
+              <div class="comp-input-row" style="display:flex;gap:0.5rem;margin-bottom:0.6rem;">
+                <input type="text" placeholder="Competitor name" value="Reliance Digital" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;">
+                <input type="number" placeholder="Price" value="1300" style="width:90px;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:8px;color:var(--text-main);padding:0.55rem 0.75rem;font-size:0.85rem;outline:none;font-family:var(--font-mono);">
+              </div>
+            </div>
+            <button class="btn btn-secondary" id="add-comp-btn" style="width:100%;margin:0.5rem 0;font-size:0.83rem;">
+              <i class="fa-solid fa-plus"></i> Add Competitor
+            </button>
+            <button class="btn btn-primary" id="analyze-btn" style="width:100%;">
+              <i class="fa-solid fa-chart-bar"></i> Analyze
+            </button>
+            <div id="comp-error" class="alert alert-error" style="display:none;margin-top:0.75rem;"></div>
+          </div>
+
+          <!-- Competitor Cards -->
+          <div class="card col-8">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-earth-americas"></i> Market Intelligence</h2>
+              <span class="badge badge-cyan" id="comp-count-badge">4 Competitors</span>
+            </div>
+            <div class="competitor-grid" id="comp-cards-grid" style="margin-bottom:1.5rem;">
+              <!-- populated by JS -->
+            </div>
+            <div id="comp-summary-block" class="result-block"></div>
+          </div>
+
+          <!-- Price Comparison Chart -->
+          <div class="card col-7">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-chart-column"></i> Price Comparison</h2>
+            </div>
+            <div style="position:relative;height:280px;">
+              <canvas id="compChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Strategy Panel -->
+          <div class="card col-5" id="strategy-card">
+            <div class="card-header">
+              <h2 class="card-title"><i class="fa-solid fa-chess"></i> Pricing Strategy</h2>
+              <span class="badge" id="position-badge" style="display:none;">—</span>
+            </div>
+            <div id="strategy-content" style="color:var(--text-muted);font-size:0.9rem;">
+              Run an analysis to see the recommended strategy.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:0.4rem;"></i>PP.PRICING — AI Dynamic Pricing Engine</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/competitor.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
